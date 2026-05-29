@@ -2,16 +2,16 @@
 # Olist E-commerce Optimization: Decoding Canceled & Zombie Orders
 
 ## 📌 Project Overview
-Project này tập trung giải quyết hai "nút thắt cổ chai" lớn nhất trong chuỗi cung ứng và vận hành của nền tảng thương mại điện tử Olist (Brazil): **Đơn hàng hủy (Canceled Orders)** và **Đơn hàng treo (Zombie Orders)**. Bằng cách kết hợp tư duy phân tích định lượng và trực quan hóa dữ liệu, dự án bóc tách các luồng hành vi bất thường của khách hàng và xác định chính xác các điểm nghẽn logistics nhằm giảm thiểu tối đa thiệt hại tài chính.
+Project nhằm xác định vấn đề thất thoát doanh thu, giải quyết lớn trong chuỗi cung ứng và vận hành của nền tảng thương mại điện tử Olist (Brazil): **Đơn hàng hủy (Canceled Orders)** và **Đơn hàng treo (Zombie Orders)**. Bằng cách kết hợp tư duy phân tích định lượng và trực quan hóa dữ liệu, dự án bóc tách các luồng hành vi bất thường của khách hàng và xác định chính xác các điểm nghẽn logistics nhằm giảm thiểu tối đa thiệt hại tài chính.
 
 * **Trạng thái dự án:** Đã hoàn thành (Gồm 2 trang Dashboard: Executive Summary & Operations Deep-dive).
-* **Công cụ sử dụng:** SQL (Data Cleaning & Exploration), Power BI (Data Modeling, DAX, UI/UX Design).
+* **Công cụ sử dụng:** SQL (Data Cleaning & Exploration), Power BI (Data Modeling, DAX, Visualization).
 
 ---
 
 ## 🛠 Tech Stack & Skills Demonstrated
-* **Data Querying & Cleaning:** SQL (Dọn dẹp logic dòng thời gian, bóc tách cấu trúc dữ liệu).
-* **Data Modeling:** Star Schema (1 Fact table, 5 Dimension tables).
+* **Data Querying & Cleaning:** SQL (Dọn dẹp logic dòng thời gian, bóc tách cấu trúc logic dữ liệu).
+* **Data Modeling:** Star Schema (2 Fact table, 3 Dimension tables).
 * **Advanced Analytics:** DAX (Tối ưu Filter Context, Weighted Average Rate, Time-Intelligence).
 * **Data Storytelling:** Trực quan hóa dữ liệu chuẩn UI/UX, tối ưu tỷ lệ Data-Ink Ratio.
 
@@ -21,7 +21,8 @@ Project này tập trung giải quyết hai "nút thắt cổ chai" lớn nhất
 
 ### 1. Sơ đồ Mô hình dữ liệu (Data Model)
 Mô hình dữ liệu được chuẩn hóa theo dạng **Sơ đồ ngôi sao (Star Schema)** để tối ưu hóa tốc độ truy vấn và xử lý Filter Context trong Power BI:
-* **Fact Table:** `fact_orders` (Chứa thông tin cốt lõi của đơn hàng và các cột mốc thời gian `timestamp`).
+* **Fact Table:**1. `fact_orders` (Chứa thông tin cốt lõi của đơn hàng và các cột mốc thời gian `timestamp`),
+*                2. `order_items` (Chứa thông tin cốt lõi của sản phẩm đơn hàng và tên sản phẩm, doanh thu, chi phí).
 * **Dimension Tables:** `dim_customers`, `dim_products`, `dim_sellers`, `dim_geolocation`, `dim_calendar`.
 
 ### 2. Thách thức kỹ thuật & Giải pháp dọn dẹp (SQL Scripts)
