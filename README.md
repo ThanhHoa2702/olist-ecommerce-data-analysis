@@ -21,8 +21,8 @@ Project nhằm xác định vấn đề thất thoát doanh thu, giải quyết 
 
 ### 1. Sơ đồ Mô hình dữ liệu (Data Model)
 Mô hình dữ liệu được chuẩn hóa theo dạng **Sơ đồ ngôi sao (Star Schema)** để tối ưu hóa tốc độ truy vấn và xử lý Filter Context trong Power BI:
-* **Fact Table:**1. `fact_orders` (Chứa thông tin cốt lõi của đơn hàng và các cột mốc thời gian `timestamp`),
-*                2. `order_items` (Chứa thông tin cốt lõi của sản phẩm đơn hàng và tên sản phẩm, doanh thu, chi phí).
+* **Fact Table:** 1. `fact_orders` (Chứa thông tin cốt lõi của đơn hàng và các cột mốc thời gian `timestamp`),
+                  2. `order_items` (Chứa thông tin cốt lõi của sản phẩm đơn hàng và tên sản phẩm, doanh thu, chi phí).
 * **Dimension Tables:** `dim_customers`, `dim_products`, `dim_sellers`, `dim_geolocation`, `dim_calendar`.
 
 ### 2. Thách thức kỹ thuật & Giải pháp dọn dẹp (SQL Scripts)
