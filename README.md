@@ -2,7 +2,7 @@
 # Olist E-commerce Optimization: Decoding Canceled & Zombie Orders
 
 ## 📌 Project Overview
-Project nhằm xác định nguyên nhân thất thoát, giải quyết những vấn đề lớn có thể tiếp tục gây ảnh hưởng đến doanh thu trong chuỗi cung ứng và vận hành của nền tảng thương mại điện tử Olist (Brazil): **Đơn hàng hủy (Canceled Orders)** và **Đơn hàng treo (Zombie Orders)**. Bằng cách kết hợp tư duy phân tích định lượng và trực quan hóa dữ liệu, dự án bóc tách các luồng hành vi bất thường của khách hàng và xác định các điểm nghẽn logistics nhằm giảm thiểu tối đa thiệt hại về tài chính.
+Project nhằm xác định nguyên nhân thất thoát, giải quyết những vấn đề lớn có thể tiếp tục gây ảnh hưởng đến doanh thu trong chuỗi cung ứng và vận hành của nền tảng thương mại điện tử Olist (Brazil): **Đơn hàng hủy** và **Đơn hàng treo**. Bằng cách kết hợp tư duy phân tích định lượng và trực quan hóa dữ liệu, dự án bóc tách các luồng hành vi bất thường của khách hàng và xác định các điểm nghẽn logistics nhằm giảm thiểu tối đa thiệt hại về tài chính.
 
 * **Trạng thái dự án:** Đã hoàn thành (Gồm 2 trang Dashboard: Executive Summary & Operations).
 * **Công cụ sử dụng:** SQL (Data Cleaning & Exploration), Power BI (Data Modeling, DAX, Visualization).
@@ -13,7 +13,7 @@ Project nhằm xác định nguyên nhân thất thoát, giải quyết những 
 * **Data Querying & Cleaning:** SQL (Bóc tách cấu trúc logic các trạng thái vòng đời của đơn hàng, xử lý danh mục sản phẩm không tên).
 * **Data Modeling:** Star Schema (2 Fact table, 3 Dimension tables).
 * **Advanced Analytics:** DAX (Tối ưu Filter Context, Weighted Average Rate, Time-Intelligence).
-* **Data Storytelling:** Trực quan hóa dữ liệu chuẩn UI/UX, tối ưu tỷ lệ Data-Ink Ratio.
+* **Data Storytelling:** Trực quan hóa dữ liệu chuẩn UI/UX.
 
 ---
 
@@ -21,20 +21,28 @@ Project nhằm xác định nguyên nhân thất thoát, giải quyết những 
 
 ### 1. Sơ đồ Mô hình dữ liệu (Data Model)
 Mô hình dữ liệu được chuẩn hóa theo dạng **Sơ đồ ngôi sao (Star Schema)** để tối ưu hóa tốc độ truy vấn và xử lý Filter Context trong Power BI:
-* **Fact Table:** `fact_orders` (Chứa thông tin trạng thái của đơn hàng và các cột mốc của vòng đời đơn hàng `timestamp`), `order_items` (Chứa thông tin sản phẩm đơn hàng và tên sản phẩm, doanh thu, chi phí).
+* **Fact Table:** `fact_orders` (Chứa thông tin trạng thái của đơn hàng và các cột mốc của vòng đời đơn hàng), `order_items` (Chứa thông tin sản phẩm đơn hàng và tên sản phẩm, doanh thu, chi phí).
 * **Dimension Tables:** `dim_customers`, `dim_products`, `dim_calendar`.
 
 ### 2. Thách thức kỹ thuật & Giải pháp dọn dẹp (SQL Scripts)
-Trước khi đưa vào mô hình, dữ liệu thô gặp phải những lỗi logic nghiêm trọng về mặt thời gian: 
-  1. **1,382 đơn hàng lỗi logic dòng thời gian** Trong đó có 1373 đơn hàng đã kết thúc vòng đời và đã được tính vào doanh thu.
-* **Giữ lại những đơn hàng lỗi về logic thời gian** Việc đưa ra quyết định này rất quan trọng vì khi đưa dữ liệu lỗi vào tính những mốc thời gian sẽ khiến dòng thời gian bị sai lệch, nếu loại bỏ sẽ gây những hậu quả về nguồn doanh thu, tồn kho. Vì mục tiêu và vấn đề phân tích khi tiến hành trực quan những timeline thì sẽ lọc những đơn hàng có dòng thời gian hợp lý.
-* **Xử lý khoảng trống (Handling NULL values):** Bảm chất các cột mốc thời gian của các đơn hàng bị trống không phải là thiếu dữ liệu, mà là phản ánh trạng thái dở dang của vận hành (Đơn bị hủy giữa chừng hoặc đơn bị kẹt hệ thống) vì vậy sẽ giữ nguyên.
-*  2. **Xuất hiện về việc thiếu dữ liệu** của 2 bảng Products và Product_category_name_translation. 
-* **Xử lý danh mục đơn hàng NULL**: Tiến hành truy vấn phát hiện 610 đơn hàng không có danh mục sản phẩm, tuy nhiên dựa trên nguyên lý hoạt động của hệ thống Olist thì những đơn hàng thuộc trạng thái 
+Trước khi đưa vào mô hình, dữ liệu thô gặp phải những vấn đề logic khiến khó khăn trong việc ra quyết định xử lý hay giữ lại những dòng dữ liệu và các thách thức về việc truy vấn những dữ liệu khi mối quan hệ của các bảng phức tạp: 
+
+Bảng `fact_orders`:
+* **1,382 đơn hàng lỗi logic dòng thời gian** Trong đó có 1373 đơn hàng đã kết thúc vòng đời và đã được tính vào doanh thu.
+
+* **Khoảng trống (NULL values):** Bản chất các cột mốc thời gian của các đơn hàng bị trống không phải là thiếu dữ liệu, mà là phản ánh trạng thái dở dang của vận hành (Đơn bị hủy giữa chừng hoặc đơn bị kẹt hệ thống).
+
+Bảng `order_items`:
+* **767 đơn hàng không có thông tin sản phẩm:** 767 đơn hàng này nằm ở bảng `fact_orders` khách đã bấm đặt hàng, 603 đơn hàng `unavailable` và 164 đơn hàng `canceled`. Nhưng lại không có thông tin trong `order_items`.
+
+Bảng `products`:
+* **Danh mục đơn hàng NULL**: 610 danh mục sản phẩm bị bỏ trống, tuy nhiên những đơn hàng chứa các sản phẩm này vẫn được xác nhận đơn và đã giao thành công. Gán tên cho danh mục này.
+
+**Việc đưa ra các quyết định** cho những hành động dữ liệu rất quan trọng khi đưa dữ liệu lỗi vào sẽ khiến dòng thời gian bị sai lệch, hoặc nếu loại bỏ sẽ gây bốc hơi một lượng lớn nguồn doanh thu, làm sai lệch số liệu tồn kho. Mục tiêu của dự án là truy vết về những vấn đề gây rò rỉ doanh thu, về phương thức xử lý: Cô lập dữ liệu lỗi để không làm sai lệch các chỉ số tính toán thời gian, nhưng bắt buộc phải giữ lại để bảo toàn bức tranh tổng doanh thu.
 
 ## 📊 Advanced DAX Formula & Analytics Logic
 
-Để báo cáo không rơi vào "Cái bẫy Excel" (cộng dồn tỷ lệ phần trăm một cách cơ học), toàn bộ các chỉ số đo lường hiệu suất đều được tính toán bằng trung bình có trọng số (Weighted Average) thông qua việc kiểm soát Filter Context chặt chẽ.
+Để báo cáo không rơi vào việc cộng dồn tỷ lệ phần trăm một cách cơ học, toàn bộ các chỉ số đo lường hiệu suất đều được tính toán bằng trung bình có trọng số  thông qua việc kiểm soát Filter Context chặt chẽ.
 
 * **Tỷ lệ Hủy đơn Thực tế (Toàn hệ thống):**
     ```dax
