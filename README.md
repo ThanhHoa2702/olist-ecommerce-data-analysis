@@ -24,7 +24,7 @@ Mô hình dữ liệu được chuẩn hóa theo dạng Star Schema để tối 
 * **Fact Table:** `fact_orders` (Chứa thông tin trạng thái của đơn hàng và các cột mốc của vòng đời đơn hàng), `order_items` (Chứa thông tin sản phẩm đơn hàng và tên sản phẩm, doanh thu, chi phí).
 * **Dimension Tables:** `dim_customers`, `dim_products`, `dim_calendar`.
 
-### 2. Thách thức kỹ thuật & Giải pháp dọn dẹp (SQL Scripts)
+### 2. Thách thức kỹ thuật & Giải pháp dọn dẹp
 Trước khi đưa vào mô hình, dữ liệu thô gặp phải những vấn đề logic khiến khó khăn trong việc ra quyết định xử lý hay giữ lại những dòng dữ liệu và các thách thức về việc truy vấn những dữ liệu khi mối quan hệ của các bảng phức tạp: 
 
 Bảng `fact_orders`:
@@ -51,10 +51,8 @@ Mục tiêu của dự án: truy vết về những vấn đề gây rò rỉ do
 **Các độ đo thách thức** 
 
 **1. Tỷ lệ Hủy đơn Thực tế (Toàn ngành hàng):**
-Về độ đo này sẽ khác với Tỷ lệ huỷ đơn toàn hệ thống, chỉ tính những đơn hàng đã được ghi nhận và có thông tin về `product_id` trong bảng `orders_items` khác với toàn hệ thống sẽ có những đơn hàng được huỷ trước khi hệ thống ghi nhận (Không có dữ liệu ở bảng `orders_items`).
+Về độ đo này sẽ khác với Tỷ lệ huỷ đơn toàn hệ thống, chỉ tính những đơn hàng đã được ghi nhận và có thông tin về `product_id` trong bảng `orders_items` (Không có dữ liệu ở bảng `orders_items`) khác với toàn hệ thống sẽ có những đơn hàng được huỷ trước khi hệ thống ghi nhận (Lấy dữ liệu trực tiếp dựa trên `fact_orders`).
 
-Công thức tổng quát về độ đo:
-    
 Cancellation_Rate_by_Category = $\frac{TotalCanceledCategory}{TotalOrderbyCategory}$
 
 ```
@@ -77,22 +75,15 @@ RETURN
 ```
 
 
-* **Giải cứu Mẫu số khi tương tác chéo (Cross-filtering Protection):** Sử dụng giải pháp `ALLEXCEPT` và `REMOVEFILTERS` để cố định mẫu số quy mô khi người xem click vào các phân đoạn lỗi trên biểu đồ Bar Chart, giúp tỷ lệ lỗi phân bổ chính xác theo từng ngành hàng mà không bị biến thành `100%` đồng loạt.
+* **Tương tác chéo (Cross-filtering Protection):** Sử dụng giải pháp `ALLEXCEPT` và `REMOVEFILTERS` để cố định mẫu số quy mô khi người xem click vào các phân đoạn lỗi, giúp tỷ lệ lỗi phân bổ chính xác theo từng ngành hàng mà không bị biến thành `100%` đồng loạt.
 
 **2. Trạng thái của những đơn hàng treo:** 
+
 Các đơn hàng treo nằm rải rác đều ở các khâu ở vòng đời đơn hàng và theo mục tiêu ban đầu, sẽ tập trung vào những đơn treo trong các khâu có thể sẽ gây ảnh hưởng đến nguồn tiền sau này (Những đơn đã được thanh toán nhưng chưa xử lý xong, chưa giao đi vận chuyển và những đơn hàng đã được giao đi vận chuyển nhưng vẫn chưa đến tay khách hàng).
 
 Vấn đề xử lý và tạo các thước đo để tính tổng các đơn hàng theo trạng thái đơn hàng rất phức tạp vì về các vấn đề trạng thái đơn hàng sẽ có những logic thời gian khác nhau. 
 
 Giải pháp: Tiến hành phân bố những đơn hàng treo theo vòng đời của đơn hàng, lấy cột mốc thời gian là ngày cập nhật cuối cùng của dữ liệu làm giới hạn.
-
-<details>
-<summary><b>🛠️ Click để xem chi tiết Code DAX: Tỷ lệ Hủy đơn Thực tế</b></summary>
-
-Vấn đề xử lý và tạo các thước đo để tính tổng các đơn hàng theo trạng thái đơn hàng rất phức tạp vì về các vấn đề trạng thái đơn hàng sẽ có những logic thời gian khác nhau. 
-
-Giải pháp: Tiến hành phân bố những đơn hàng treo theo vòng đời của đơn hàng, lấy cột mốc thời gian là ngày cập nhật cuối cùng của dữ liệu làm giới hạn.
-<details>
 
 ```dax
 WareHouse = 
@@ -129,15 +120,14 @@ RETURN
 AVG_Shipped_day = 
     CALCULATE(
         AVERAGEX(fact_orders,DATEDIFF(fact_orders[delivered_carrier_date],fact_orders[delivered_customer_date],DAY)),
-        -- Điều kiện lọc: ngày xác nhận đơn không được trống
+        -- 1.Điều kiện lọc: Trạng thái đơn hàng
         fact_orders[order_status] = "delivered",
-        NOT ISBLANK(fact_orders[approved_at_date]),
-        -- Điều kiện lọc: ngày giao cho đơn vị vận chuyển không được trống
+        -- 2.Điều kiện lọc: Vòng đời đơn hàng hợp lệ
         NOT ISBLANK(fact_orders[delivered_carrier_date]),
         NOT ISBLANK(fact_orders[delivered_customer_date]),
-        -- Điều kiện lọc: Những ngày lỗi 
+        -- 3.Điều kiện lọc: Những ngày lỗi 
         DATEDIFF(fact_orders[delivered_carrier_date],fact_orders[delivered_customer_date],DAY) >= 0,
-        -- Diều kiện lọc: Ngày nhận hàng sẽ bé hơn ngày giao hàng dự kiến 
+        -- 4.Điều kiện lọc: Ngày nhận hàng sẽ bé hơn ngày giao hàng dự kiến 
         fact_orders[delivered_customer_date] <= fact_orders[estimated_delivery]
     )
 ```
@@ -151,13 +141,13 @@ AVG_Shipped_day =
 * **Nút thắt Before Shipping:** Chiếm tỷ trọng lớn nhất trong luồng hủy đơn với **1,018 đơn hàng**. Đây là vùng cơ hội lớn nhất để tối ưu hóa quy trình xác nhận đơn.
 
 ### Trang 2: Operations Deep-Dive (Truy vết Đơn hàng Treo - Zombie)
-* **Định vị Đơn Zombie:** Xác định **1,723 đơn hàng** ở trạng thái "Sống không qua khỏi, chết không xong" (Bị trễ hạn nghiêm trọng so với ngày dự kiến giao nhưng trạng thái không chuyển sang Delivered hay Canceled).
-* **Nút thắt cổ chai Vận chuyển (3PL):** **64% đơn hàng Zombie** (1,106 đơn) đang bị kẹt ở trạng thái `shipped`. Điều này chỉ điểm trực diện năng lực yếu kém hoặc sự thiếu minh bạch của các đối tác vận chuyển thứ ba.
-* **Rủi ro tài chính:** Đống đơn hàng Zombie này đang giam giữ **$272.85K doanh thu rủi ro** (Revenue at Risk) và tiêu tốn **$26.38K chi phí chìm** (Bao bì, nhân công đóng gói, vận chuyển chặng đầu). Biến bang **SP** và **RJ** thành hai điểm đen logistics cần xử lý khẩn cấp.
+* **Định vị Đơn Zombie:** Xác định **1,723 đơn hàng** ở trạng thái mập mờ lơ lửng (Bị trễ hạn nghiêm trọng so với ngày dự kiến giao nhưng trạng thái không chuyển sang Delivered hay Canceled).
+* **Nút thắt cổ chai Vận chuyển:** **64% đơn hàng Zombie:** (1,106 đơn) đang bị kẹt ở trạng thái `shipped`. Điều này báo động sự thiếu chuyên nghiệp hoặc sự thiếu minh bạch khi nhiều đơn hàng bị treo quá lâu của các đối tác vận chuyển thứ ba.
+* **Rủi ro tài chính:** Đống đơn hàng Zombie này đang giam giữ **$272.85K doanh thu rủi ro** và tiêu tốn **$26.38K chi phí chìm** vận chuyển. Biến bang **SP** và **RJ** thành hai điểm đen logistics cần xử lý khẩn cấp.
 
 ---
 
 ## 🚀 Actionable Recommendations (Khuyến nghị hành động)
-1. **Kiểm toán Đối tác Vận chuyển (3PL Audit):** Trực tiếp làm việc và siết chặt KPI đối với các đơn vị vận chuyển tại bang SP và RJ, yêu cầu giải trình về 1,106 đơn hàng kẹt chặng `shipped` quá 90 ngày.
-2. **Khắc phục Toàn vẹn dữ liệu API:** Kiểm tra lại kết nối API giữa hệ thống thanh toán và hệ thống kho để dứt điểm tình trạng đơn hàng mồ côi không có thông tin sản phẩm.
-3. **Giải phóng Kho hàng:** Xử lý dứt điểm 301 đơn hàng đang kẹt ở khâu `processing` nội bộ kho để tối ưu hóa không gian tồn kho cho các ngành hàng có biên lợi nhuận cao như *Toys & Baby* hay *Health & Beauty*.
+1. **Kiểm toán Đối tác Vận chuyển:** Trực tiếp làm việc và siết chặt KPI đối với các đơn vị vận chuyển tại bang SP và RJ, yêu cầu giải trình về 1,106 đơn hàng kẹt chặng `shipped` quá 30 ngày.
+2. **Khắc phục Toàn vẹn dữ liệu:** Kiểm tra lại giữa hệ thống thanh toán và hệ thống kho để dứt điểm tình trạng đơn hàng mồ côi không có thông tin sản phẩm.
+3. **Giải phóng Kho hàng:** Xử lý dứt điểm 301 đơn hàng đang kẹt ở khâu `processing` nội bộ kho để tối ưu hóa không gian tồn kho cho các ngành hàng.
