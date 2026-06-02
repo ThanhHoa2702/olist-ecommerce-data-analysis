@@ -1,7 +1,9 @@
 # Từ điển Dữ liệu: Dự án Phân tích Olist Brazil
 
 **Nguồn dữ liệu:** Trích xuất từ công ty Olist (Sàn thương mại điện tử Brazil).
+
 **Phạm vi tài liệu:** Gồm 5/9 bảng cốt lõi (Khách hàng, Đơn hàng, Vận chuyển sản phẩm,...).
+
 **Mục tiêu:** Xác định nguồn thất thoát và hành vi mua sắm của khách hàng.
 
 ---
