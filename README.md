@@ -236,7 +236,7 @@ VAR End_date = CALCULATE(MAX(fact_orders[delivered_customer_date]),ALL(fact_orde
 RETURN
     CALCULATE(DISTINCTCOUNT(fact_orders[order_id]),
     -- Điều kiện lọc: 
-    fact_orders[order_status] = "shipped",
+    KEEPFILTERS(fact_orders[order_status] = "shipped"),
     -- Điều kiện những đơn hàng đang bị treo
     DATEDIFF(fact_orders[estimated_delivery],End_date,DAY) > 30,
     -- Điều kiện đơn hàng khách chưa nhận được hàng
@@ -250,7 +250,7 @@ RETURN
 
 **3. Thời gian vận chuyển trung bình của đơn hàng**
 
-Độ đo này được tính dựa trên trung bình tổng khoảng cách của ngày vận chuyển và ngày nhận đơn. Điều kiện tiên quyết những đơn hàng đã được giao thành công, dòng thời gian phải hợp lệ. Do vậy ta sẽ cô lập dữ liệu và tính những đơn hàng có logic thời gian hợp lệ nhất.
+Độ đo này được tính dựa trên trung bình tổng khoảng cách của ngày vận chuyển và ngày nhận đơn. Điều kiện tiên quyết những đơn hàng đã được giao thành công, dòng thời gian phải hợp lệ. Do vậy ta sẽ cô lập dữ liệu và tính những đơn hàng có logic thời gian hợp lệ nhất. 
 
 <details>
 <summary>DAX Query : </summary>
