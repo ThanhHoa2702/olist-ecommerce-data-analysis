@@ -281,7 +281,7 @@ AVG_Shipped_day =
 * **Nút thắt Before Shipping:** Chiếm tỷ trọng lớn nhất trong luồng hủy đơn với **1,018 đơn hàng**. Đây là vùng cơ hội lớn nhất để tối ưu hóa quy trình xác nhận đơn.
 
 ### Trang 2: Operations Deep-Dive (Truy vết Đơn hàng Treo - Zombie)
-* **Định vị Đơn Zombie:** Xác định **1,723 đơn hàng** ở trạng thái lơ lửng (Bị trễ hạn nghiêm trọng so với ngày dự kiến giao nhưng trạng thái không chuyển sang Delivered hay Canceled).
+* **Định vị Đơn Zombie:** Xác định **1,721 đơn hàng** ở trạng thái lơ lửng (Bị trễ hạn nghiêm trọng so với ngày dự kiến giao nhưng trạng thái không chuyển sang Delivered hay Canceled).
 * **Nút thắt cổ chai Vận chuyển:** **64% đơn hàng Zombie:** (1,106 đơn) đang bị kẹt ở trạng thái `shipped`. Điều này báo động sự thiếu chuyên nghiệp hoặc sự thiếu minh bạch khi nhiều đơn hàng bị treo quá lâu của các đối tác vận chuyển thứ ba.
 * **Rủi ro tài chính:** Đống đơn hàng Zombie này đang giam giữ **$272.85K doanh thu rủi ro** và tiêu tốn **$26.38K chi phí chìm** vận chuyển. Biến bang **SP** và **RJ** thành hai điểm đen logistics cần xử lý khẩn cấp.
 
