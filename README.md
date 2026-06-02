@@ -24,6 +24,11 @@ Mô hình dữ liệu được chuẩn hóa theo dạng Star Schema để tối 
 * **Fact Table:** `fact_orders` (Chứa thông tin trạng thái của đơn hàng và các cột mốc của vòng đời đơn hàng), `order_items` (Chứa thông tin sản phẩm đơn hàng và tên sản phẩm, doanh thu, chi phí).
 * **Dimension Tables:** `dim_customers`, `dim_products`, `dim_calendar`.
 
+<details>
+<summary> Data Model View </summary>
+<img width="1481" height="1001" alt="image" src="https://github.com/user-attachments/assets/487b3c24-dc62-4c97-93fe-c3dcaa5bd9cd" />
+</details>
+
 ### 2. Thách thức kỹ thuật & Giải pháp dọn dẹp (SQL Script)
 Trước khi đưa vào mô hình, dữ liệu thô gặp phải những vấn đề logic khiến khó khăn trong việc ra quyết định xử lý hay giữ lại những dòng dữ liệu và các thách thức về việc truy vấn những dữ liệu khi mối quan hệ của các bảng phức tạp: 
 
@@ -72,29 +77,26 @@ WHERE order_status = 'delivered'
 
 </details>
 
-
-
 <details>
 <summary> Khoảng trống (NULL values): Các cột mốc thời gian của các đơn hàng bị trống thiếu dữ liệu trong thời gian quá lâu so với thời gian cập nhật dữ liệu. </summary>
 
 ```
 SELECT 
-	DISTINCT(o.order_id),
+	o.order_id,
+	o.order_status,
 	o.purchase_timestamp,
 	o.approved_at_timestamp,
-	o.order_status,
 	o.delivered_carrier_timestamp,
-	o.delivered_customer_timestamp
+	items.shipping_limit,
+	(SELECT MAX(delivered_customer_timestamp) FROM orders) AS Limit_time
 FROM orders AS o
 LEFT JOIN order_items AS items
 ON items.order_id = o.order_id
 WHERE order_status IN ('approved','invoiced','processing') -- Trạng thái những đơn hàng thuộc Warehouse
-	AND ((SELECT MAX(delivered_customer_timestamp) FROM orders) > items.shipping_limit  -- Vi phạm mốc thời gian: thời gian cập nhật dữ liệu cuối cùng của hệ thống vượt qua mốc
-	AND delivered_carrier_timestamp IS NULL) -- Không có thời gian đưa cho đơn vị vận chuyển
-
+	AND ((SELECT MAX(delivered_customer_timestamp) FROM orders) > items.shipping_limit) -- Vi phạm mốc thời gian: thời gian cập nhật dữ liệu cuối cùng của hệ thống vượt qua mốc
+	AND delivered_carrier_timestamp IS NULL -- Không có thời gian đưa cho đơn vị vận chuyển 
 ```
-<img width="1979" height="317" alt="image" src="https://github.com/user-attachments/assets/937efa5b-8f48-4e9e-9ba9-cb56776830c5" />
-
+<img width="1710" height="309" alt="image" src="https://github.com/user-attachments/assets/97804147-def8-4577-bb07-769248390d61" />
 
 </details>
 
