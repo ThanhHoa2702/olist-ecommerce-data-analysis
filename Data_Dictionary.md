@@ -44,12 +44,12 @@
 | :--- | :--- |
 | `created` | Đơn hàng được tạo trên hệ thống, hệ thống đang chờ khách hàng tiến hành thanh toán. |
 | `approved` | Thanh toán đã được cổng thanh toán xác nhận thành công. |
-| `invoiced` | Đã xuất hóa đơn, thông tin đơn hàng được chuyển về cho Nhà bán. |
-| `processing` | Nhà bán đang tiến hành lấy hàng, đóng gói và chuẩn bị giao cho bưu cục. |
+| `invoiced` | Đã xuất hóa đơn, thông tin đơn hàng được chuyển về hệ thống. |
+| `processing` | Đang tiến hành lấy hàng, đóng gói và chuẩn bị giao cho bưu cục. |
 | `shipped` | Hàng đã rời kho nhà bán và được bàn giao cho đối tác vận chuyển thứ ba. |
 | `delivered` | Đơn hàng đã được giao thành công đến tay. |
 | `unavailable` | Hệ thống đánh dấu đơn hàng không thể thực hiện (thường do lỗi kho, hết hàng tồn kho đột xuất). |
-| `canceled` | Đơn hàng bị hủy một cách chủ động (bởi khách hàng đổi ý hoặc nhà bán không thể đáp ứng). |
+| `canceled` | Đơn hàng bị hủy một cách chủ động (bởi khách hàng đổi ý hoặc không thể đáp ứng được nhu cầu khách hàng). |
 
 > **NOTE:** Bản chất của `unavailable` và `canceled`: Mặc dù mang hai tên gọi khác nhau, nhưng về mặt luồng tiền cả hai trạng thái này đều dẫn đến kết quả: Công ty thất thu và phải hoàn tiền. Do đó, trong các DAX Measure, hai trạng thái này được gom nhóm để đo lường toàn diện Tổng đơn hàng thất thoát.
 
