@@ -287,7 +287,7 @@ AVG_Shipped_day =
 
 ---
 
-## 🚀 Actionable Recommendations (Khuyến nghị hành động)
+## 🚀 Actionable Recommendations
 1. **Kiểm toán Đối tác Vận chuyển:** Trực tiếp làm việc và siết chặt KPI đối với các đơn vị vận chuyển tại bang SP và RJ, yêu cầu giải trình về 1,106 đơn hàng kẹt chặng `shipped` quá 30 ngày.
 2. **Khắc phục Toàn vẹn dữ liệu:** Kiểm tra lại giữa hệ thống thanh toán và hệ thống kho để dứt điểm tình trạng đơn hàng mồ côi không có thông tin sản phẩm.
 3. **Giải phóng Kho hàng:** Xử lý dứt điểm 301 đơn hàng đang kẹt ở khâu `processing` nội bộ kho để tối ưu hóa không gian tồn kho cho các ngành hàng.
