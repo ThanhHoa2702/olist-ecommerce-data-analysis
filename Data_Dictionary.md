@@ -33,7 +33,7 @@
 | `order_delivered_customer_date`| TIMESTAMP | Thời gian khách hàng nhận được đơn. |
 | `order_estimated_delivery_date`| TIMESTAMP | Thời gian giao hàng dự kiến. |
 
-### 📌 Phân tích chuyên sâu: Trường `order_status` (Bảng Orders)
+### Trường `order_status` (Bảng Orders)
 
 * **Mô tả chung:** Ghi nhận trạng thái hiện tại của đơn hàng trong chuỗi cung ứng tại thời điểm dữ liệu được xuất khỏi hệ thống.
 * **Kiểu dữ liệu (Data Type):** VARCHAR
