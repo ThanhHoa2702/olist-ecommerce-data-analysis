@@ -2,9 +2,9 @@
 # Olist E-commerce Optimization: Decoding Canceled & Zombie Orders
 
 ## 📌 Project Overview
-Xác định nguyên nhân thất thoát, giải quyết những vấn đề lớn có thể tiếp tục gây ảnh hưởng đến doanh thu, trải nghiệm khách hàng trong chuỗi cung ứng và vận hành của nền tảng thương mại điện tử Olist: **Đơn hàng hủy** và **Đơn hàng treo**. Bằng cách kết hợp tư duy phân tích định lượng và trực quan hóa dữ liệu, dự án bóc tách các luồng hành vi bất thường của khách hàng và xác định các điểm nghẽn logistics nhằm giảm thiểu tối đa thiệt hại về tài chính.
+Xác định nguyên nhân thất thoát, giải quyết những vấn đề lớn có thể tiếp tục gây ảnh hưởng đến doanh thu, trải nghiệm khách hàng trong chuỗi cung ứng và vận hành của nền tảng thương mại điện tử Olist: **Đơn hàng hủy** và **Đơn hàng treo**. Bằng cách kết hợp tư duy phân tích định lượng và trực quan hóa dữ liệu, bóc tách các luồng hành vi bất thường của khách hàng và xác định các điểm nghẽn logistics nhằm giảm thiểu tối đa thiệt hại về tài chính.
 
-* **Trạng thái dự án:** Gồm 2 trang Dashboard: Executive Summary & Operations.
+* **Gồm 2 trang Dashboard**: Executive Summary & Operations.
 * **Công cụ sử dụng:** SQL (Data Cleaning & Exploration), Power BI (Data Modeling, DAX, Visualization).
 
 ---
@@ -14,25 +14,26 @@ Xác định nguyên nhân thất thoát, giải quyết những vấn đề l�
 ### Executive Summary 
 * **Khám phá Đơn hàng:** Có 1.234 đơn hàng huỷ trên toàn hệ thống doanh thu cho tổng số đơn hàng này $95.24k, tỷ lệ huỷ đơn trong 2 năm là 1.24%. 
 * **Nguyên nhân thất thoát:** 75 đơn hàng huỷ sau khi được đưa đi vận chuyển, gây thiệt hại chi phí vận chuyển $1,363k. Trọng điểm 2 ngành hàng Home & Furniture, Tech & Electronics có phí vận chuyển thất thoát cao.
-* **Đơn huỷ:** Phát hiện **767 đơn hàng** tồn tại trong hệ thống, hoàn toàn trống thông tin sản phẩm. 386 đơn huỷ do sự chủ động của khách hàng nằm nhiều ở khâu Warehouse, có thể do sự thay đổi về nhu cầu mua sắm sản phẩm của khách hàng.
+* **Đơn huỷ:** Phát hiện **767 đơn hàng** tồn tại trong hệ thống, nhưng trống thông tin sản phẩm. 386 đơn huỷ do sự chủ động của khách hàng nằm nhiều ở khâu Warehouse, có thể do sự thay đổi về nhu cầu mua sắm sản phẩm của khách hàng.
 
-**Kết luận:** Về tỷ lệ số đơn huỷ do sự chủ động của khách hàng trên toàn ngành là 0.47%. Số lượng đơn huỷ gây ảnh hưởng trực tiếp đến trải nghiệm mua sắm nằm nhiều ở 767 đơn hàng không khả dụng, và đây là hành động huỷ đơn từ phía cửa hàng cần phải xem xét. Có khá nhiều đơn hàng treo chưa cập nhật trạng thái tiềm ẩn có thể tiếp tục gây rò rỉ nguồn tiền ở khâu vận hành. Và vấn đề này có thể sẽ ảnh hưởng đến hành vi mua sắm, trải nghiệm của khách hàng trong tương lai.
+**Kết luận:** Tỷ lệ đơn huỷ do sự chủ động của khách hàng trên toàn ngành là 0.47% so với toàn hệ thống là 1.24%. Số lượng đơn huỷ gây ảnh hưởng trực tiếp đến trải nghiệm mua sắm nằm nhiều ở 767 đơn hàng không khả dụng, đây là hành động huỷ đơn từ phía cửa hàng cần phải xem xét. Có khá nhiều đơn hàng treo chưa cập nhật trạng thái tiềm ẩn có thể tiếp tục gây rò rỉ nguồn tiền ở khâu vận hành. Và vấn đề này có thể sẽ ảnh hưởng đến hành vi mua sắm, trải nghiệm của khách hàng trong tương lai.
 
 ### Operations
 * **Xử lý đơn hàng:** Xác định **1,721 đơn hàng** ở trạng thái lơ lửng,  613 đơn hàng chưa giao cho đơn vị vận chuyển, bị trễ hạn nghiêm trọng so với ngày dự kiến giao nhưng trạng thái đơn hàng vẫn không chuyển đổi.
 * **Vấn đề tiềm ẩn:** 1,106 đơn (64% Tổng đơn hàng treo) đang bị kẹt ở trạng thái `shipped`. 
 * **Rủi ro tài chính:** Tổng số đơn hàng Zombie này đang giam giữ **$272.85K doanh thu rủi ro** và tiêu tốn **$26.38K chi phí vận chuyển**. Biến bang **SP** và **RJ** thành hai trọng điểm có số đơn đang vận chuyển cao.
 
-**Kết luận:** Dựa theo biểu đồ Line không có sự tương quan của số lượng đơn với việc xử lý đơn. Cho thấy rằng việc số lượng đơn hàng tăng trưởng mạnh theo thời gian,nhưng thời gian xử lý trung bình của đơn hàng không bị kéo dài, ngược lại việc tối ưu xử lý đơn hàng khá nhanh. Về thời gian giao hàng trung bình của bên vận chuyển thứ ba cũng làm khá tốt. Tuy nhiên để không bị rò rỉ, nguồn tiền bị lơ lửng vẫn chưa chảy vào doanh thu thì chúng ta cần hành động để tối ưu hoá nguồn tiền, và kiểm soát được vấn đề 
+**Kết luận:** Dựa theo biểu đồ Line không có sự tương quan của số lượng đơn với việc xử lý đơn. Cho thấy rằng việc số lượng đơn hàng tăng trưởng mạnh theo thời gian,nhưng thời gian xử lý trung bình của đơn hàng không bị kéo dài, ngược lại việc tối ưu xử lý đơn hàng khá nhanh. Về thời gian giao hàng trung bình của bên vận chuyển thứ ba cũng làm khá tốt. Tuy nhiên để không bị rò rỉ, nguồn tiền bị lơ lửng vẫn chưa vào doanh thu thì ta cần hành động để tối ưu hoá nguồn tiền, và kiểm soát được vấn đề.
+
+## 🚀 Recommendations
+
+Đầu tiên để chắc chắn vấn đề của việc những đơn hàng treo là xuất phát từ bên thứ nhất hay bên vận chuyển thứ 3 thì chúng ta cần xử lý theo trình tự
+1. **Toàn vẹn dữ liệu:** Kiểm tra lại giữa hệ thống thanh toán và hệ thống kho ở quá trình cập nhật trạng thái để dứt điểm tình trạng những đơn hàng không khả dụng, và xem xét về vấn đề những đơn hàng treo quá lâu.
+2. **Đối với các đối tác Vận chuyển:** Cần làm việc và tìm hiểu, giải trình về 1,106 đơn hàng kẹt chặng `shipped` quá 30 ngày.
+3. **Giải phóng Kho hàng:** Xử lý 301 đơn hàng đang kẹt ở khâu `processing` nội bộ kho và 312 đơn hàng `invoiced` nhằm tối ưu hóa không gian tồn kho cho các ngành hàng.
 
 ---
 
-## 🚀 Actionable Recommendations
-
-Đầu tiên để chắc chắn vấn đề của việc những đơn hàng treo là do bên thứ nhất hay bên vận chuyển thứ 3 thì chúng ta cần xử lý theo trình tự
-1. **Toàn vẹn dữ liệu:** Kiểm tra lại giữa hệ thống thanh toán và hệ thống kho ở quá trình cập nhật trạng thái để dứt điểm tình trạng những đơn hàng không khả dụng, và xem xét về vấn đề những đơn hàng treo quá lâu.
-2. **Đối tác Vận chuyển:** Đối với các đơn vị vận chuyển cần làm việc và tìm hiểu về 1,106 đơn hàng kẹt chặng `shipped` quá 30 ngày.
-3. **Giải phóng Kho hàng:** Xử lý 301 đơn hàng đang kẹt ở khâu `processing` nội bộ kho để tối ưu hóa không gian tồn kho cho các ngành hàng.
 ## 🛠 Tech Stack & Skills Demonstrated
 * **Data Querying & Cleaning:** SQL (Bóc tách cấu trúc logic các trạng thái vòng đời của đơn hàng, xử lý danh mục sản phẩm không tên).
 * **Data Modeling:** Star Schema (2 Fact table, 3 Dimension tables).
@@ -188,7 +189,7 @@ Phương thức xử lý: Cô lập dữ liệu lỗi để không làm sai lệ
 
 ## 📊 Advanced DAX Formula & Analytics Logic
 
-Để báo cáo không rơi vào việc cộng dồn tỷ lệ phần trăm một cách cơ học, toàn bộ các chỉ số đo lường hiệu suất đều được tính toán bằng trung bình có trọng số  thông qua việc kiểm soát Filter Context chặt chẽ.
+Toàn bộ các chỉ số đo lường hiệu suất đều được tính toán bằng trung bình có trọng số, kiểm soát Filter Context chặt chẽ. Tránh các trực quan báo cáo rơi vào việc cộng dồn tỷ lệ phần trăm.
 
 **Các độ đo thách thức** 
 
