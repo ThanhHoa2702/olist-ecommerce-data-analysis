@@ -40,8 +40,6 @@ Xác định nguyên nhân thất thoát, giải quyết những vấn đề l�
 * **Advanced Analytics:** DAX (Tối ưu Filter Context, Weighted Average Rate, Time-Intelligence).
 * **Data Storytelling:** Trực quan hóa dữ liệu chuẩn UI/UX.
 
----
-
 ## 🏗 Data Architecture & Data Cleaning (SQL)
 
 ### 1. Sơ đồ Mô hình dữ liệu (Data Model)
@@ -297,4 +295,8 @@ AVG_Shipped_day =
     )
 ```
 </details>
+
+---
+## Review
+Cảm nhận về dự án: Bộ dữ liệu thực tế về các lỗi thường xảy ra trong hệ thống vận hành của sàn thương mại điện tử, gây khó khăn và nhiều vấn đề đòi hỏi phải khám phá và phân tích kỹ trước khi ra quyết định sử dụng những dữ liệu để trực quan, cũng như chọn lọc ngữ cảnh để tạo các chỉ số tối ưu về số liệu, hạn chế những sai sót khi sai về vấn đề ngữ cảnh, logic của định nghĩa các thuộc tính trong dữ liệu.
 
