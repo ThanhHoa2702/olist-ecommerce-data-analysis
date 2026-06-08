@@ -28,9 +28,9 @@ Xác định nguyên nhân thất thoát, giải quyết những vấn đề l�
 ## 🚀 Recommendations
 
 Đầu tiên để chắc chắn vấn đề của việc những đơn hàng treo là xuất phát từ bên thứ nhất hay bên vận chuyển thứ 3 thì cần hành động theo trình tự
-1. **Toàn vẹn dữ liệu:** Kiểm tra lại giữa hệ thống thanh toán và hệ thống kho ở quá trình cập nhật trạng thái để dứt điểm tình trạng những đơn hàng không khả dụng, và xem xét về vấn đề những đơn hàng treo quá lâu.
-2. **Đối với các đối tác Vận chuyển:** Cần làm việc và tìm hiểu, giải trình về đơn hàng kẹt chặng `shipped` quá 30 ngày.
-3. **Giải phóng Kho hàng:** Xử lý 301 đơn hàng đang kẹt ở khâu `processing` nội bộ kho và 312 đơn hàng `invoiced` nhằm tối ưu hóa không gian tồn kho cho các ngành hàng.
+1. **Toàn vẹn dữ liệu hệ thống:** Kiểm tra lại giữa hệ thống dữ liệu thanh toán và hệ thống dữ liệu kho ở quá trình cập nhật trạng thái, thời gian đơn hàng để dứt điểm tình trạng những đơn hàng không khả dụng, và xem xét về vấn đề những đơn hàng treo quá lâu.
+2. **Các đối tác Vận chuyển:** Liên hệ làm việc và tìm hiểu, giải trình về đơn hàng kẹt chặng `shipped` quá 30 ngày.
+3. **Hệ thống Kho hàng:** Xử lý 301 đơn hàng đang kẹt ở khâu `processing` nội bộ kho và 312 đơn hàng `invoiced` nhằm tối ưu hóa không gian tồn kho cho các ngành hàng.
 
 ---
 
