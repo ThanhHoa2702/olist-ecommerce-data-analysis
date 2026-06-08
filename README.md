@@ -23,7 +23,7 @@ Xác định nguyên nhân thất thoát, giải quyết những vấn đề l�
 * **Vấn đề tiềm ẩn:** 1,106 đơn (64% Tổng đơn hàng treo) đang bị kẹt ở trạng thái `shipped`. 
 * **Rủi ro tài chính:** Tổng số đơn hàng Zombie này đang giam giữ **$272.85K doanh thu rủi ro** và tiêu tốn **$26.38K chi phí vận chuyển**. Biến bang **SP** và **RJ** thành hai trọng điểm có số đơn đang vận chuyển cao.
 
-**Kết luận:** Dựa theo biểu đồ Line không có sự tương quan của số lượng đơn với việc xử lý đơn. Cho thấy rằng việc số lượng đơn hàng tăng trưởng mạnh theo thời gian,nhưng thời gian xử lý trung bình của đơn hàng không bị kéo dài, ngược lại việc tối ưu xử lý đơn hàng khá nhanh. Về thời gian giao hàng trung bình của bên vận chuyển thứ ba cũng làm khá tốt. Tuy nhiên để không bị rò rỉ, nguồn tiền không bị lơ lửng vẫn chưa chảy vào doanh thu thì chúng ta cần hành động để tối ưu hoá nguồn tiền, và kiểm soát được vấn đề 
+**Kết luận:** Dựa theo biểu đồ Line không có sự tương quan của số lượng đơn với việc xử lý đơn. Cho thấy rằng việc số lượng đơn hàng tăng trưởng mạnh theo thời gian,nhưng thời gian xử lý trung bình của đơn hàng không bị kéo dài, ngược lại việc tối ưu xử lý đơn hàng khá nhanh. Về thời gian giao hàng trung bình của bên vận chuyển thứ ba cũng làm khá tốt. Tuy nhiên để không bị rò rỉ, nguồn tiền bị lơ lửng vẫn chưa chảy vào doanh thu thì chúng ta cần hành động để tối ưu hoá nguồn tiền, và kiểm soát được vấn đề 
 
 ---
 
@@ -207,7 +207,7 @@ Mẫu số là `Total_Order_by_Category` có điều kiện lọc cố định n
 VAR Total_Canceled_Category =
     CALCULATE(DISTINCTCOUNT(fact_orders[order_id]),
     -- Điều kiện 1: Thuộc trạng thái đơn hàng
-    fact_orders[order_status] IN {"canceled","unavailable"},
+    fact_orders[order_status] = "canceled",
     -- Điều kiện 2: Lấy những đơn hàng có thông tin
     FILTER(fact_orders,NOT ISEMPTY(RELATEDTABLE(order_items))))
 VAR Total_Order_by_Category = 
@@ -226,7 +226,8 @@ RETURN
 **Tương tác chéo (Cross-filtering Protection):** Sử dụng giải pháp `ALLEXCEPT` để cố định mẫu số quy mô khi người xem click vào các phân đoạn lỗi, giúp tỷ lệ lỗi phân bổ chính xác theo từng ngành hàng mà không bị biến thành `100%` đồng loạt.
 </details>
 
-<img width="1116" height="438" alt="image" src="https://github.com/user-attachments/assets/a034e47e-e286-4a37-a7db-d4c8f7f5b17a" />
+<img width="925" height="401" alt="image" src="https://github.com/user-attachments/assets/9d4e6eb7-6d96-42e6-957f-cc3d7da42f1e" />
+
 
 **2. Trạng thái của những đơn hàng treo:** 
 
