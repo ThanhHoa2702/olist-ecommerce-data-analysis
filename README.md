@@ -1,7 +1,7 @@
 
 # Olist E-commerce Optimization: Decoding Canceled & Zombie Orders
 
-## 📌 Project Overview
+## 📌 Overview
 Xác định nguyên nhân thất thoát, giải quyết những vấn đề lớn có thể tiếp tục gây ảnh hưởng đến doanh thu, trải nghiệm khách hàng trong chuỗi cung ứng và vận hành của nền tảng thương mại điện tử Olist: **Đơn hàng hủy** và **Đơn hàng treo**. Bằng cách kết hợp phân tích định lượng và trực quan hóa dữ liệu, bóc tách các luồng hành vi bất thường của khách hàng và xác định các điểm nghẽn logistics nhằm giảm thiểu tối đa thiệt hại về tài chính.
 
 * **Gồm 2 trang Dashboard**: Executive Summary & Operations.
