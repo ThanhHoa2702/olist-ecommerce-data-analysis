@@ -197,7 +197,7 @@ Phương thức xử lý: Cô lập dữ liệu lỗi để không làm sai lệ
 
 ## 📊 Advanced DAX Formula & Analytics Logic
 
-Toàn bộ các chỉ số đo lường hiệu suất đều được tính toán bằng trung bình có trọng số, kiểm soát Filter Context chặt chẽ. Tránh các trực quan báo cáo rơi vào việc cộng dồn tỷ lệ phần trăm.
+Toàn bộ các chỉ số đo lường hiệu suất đều được tính toán bằng trung bình có trọng số, kiểm soát Filter Context chặt chẽ. Nhằm tránh các biểu đồ trực quan rơi vào việc cộng dồn tỷ lệ phần trăm.
 
 **Các độ đo thách thức** 
 
