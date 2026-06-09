@@ -2,7 +2,7 @@
 # Olist E-commerce Optimization: Decoding Canceled & Zombie Orders
 
 ## 📌 Project Overview
-Xác định nguyên nhân thất thoát, giải quyết những vấn đề lớn có thể tiếp tục gây ảnh hưởng đến doanh thu, trải nghiệm khách hàng trong chuỗi cung ứng và vận hành của nền tảng thương mại điện tử Olist: **Đơn hàng hủy** và **Đơn hàng treo**. Bằng cách kết hợp tư duy phân tích định lượng và trực quan hóa dữ liệu, bóc tách các luồng hành vi bất thường của khách hàng và xác định các điểm nghẽn logistics nhằm giảm thiểu tối đa thiệt hại về tài chính.
+Xác định nguyên nhân thất thoát, giải quyết những vấn đề lớn có thể tiếp tục gây ảnh hưởng đến doanh thu, trải nghiệm khách hàng trong chuỗi cung ứng và vận hành của nền tảng thương mại điện tử Olist: **Đơn hàng hủy** và **Đơn hàng treo**. Bằng cách kết hợp phân tích định lượng và trực quan hóa dữ liệu, bóc tách các luồng hành vi bất thường của khách hàng và xác định các điểm nghẽn logistics nhằm giảm thiểu tối đa thiệt hại về tài chính.
 
 * **Gồm 2 trang Dashboard**: Executive Summary & Operations.
 * **Công cụ sử dụng:** SQL (Data Cleaning & Exploration), Power BI (Data Modeling, DAX, Visualization).
@@ -19,15 +19,15 @@ Xác định nguyên nhân thất thoát, giải quyết những vấn đề l�
 **Kết luận:** Tỷ lệ đơn huỷ do sự chủ động của khách hàng trên toàn ngành là 0.47% so với toàn hệ thống là 1.24%. Số lượng đơn huỷ gây ảnh hưởng trực tiếp đến trải nghiệm mua sắm nằm nhiều ở 767 đơn hàng không khả dụng, đây là hành động huỷ đơn từ phía cửa hàng cần phải xem xét. Có khá nhiều đơn hàng treo chưa cập nhật trạng thái tiềm ẩn có thể tiếp tục gây rò rỉ nguồn tiền ở khâu vận hành. Và vấn đề này có thể sẽ ảnh hưởng đến hành vi mua sắm, trải nghiệm của khách hàng trong tương lai.
 
 ### Operations
-* **Xử lý đơn hàng:** Xác định **1,721 đơn hàng** ở trạng thái lơ lửng,  613 đơn hàng chưa giao cho đơn vị vận chuyển, bị trễ hạn nghiêm trọng so với ngày dự kiến giao nhưng trạng thái đơn hàng vẫn không chuyển đổi.
+* **Xử lý đơn hàng:** Xác định **1,721 đơn hàng** ở trạng thái treo với thời gian khá lâu,  613 đơn hàng chưa giao cho đơn vị vận chuyển, bị trễ hạn nghiêm trọng so với ngày dự kiến giao nhưng trạng thái đơn hàng vẫn không chuyển đổi.
 * **Vấn đề tiềm ẩn:** 1,106 đơn (64% Tổng đơn hàng treo) đang bị kẹt ở trạng thái `shipped`. 
 * **Rủi ro tài chính:** Tổng số đơn hàng Zombie này đang giam giữ **$272.85K doanh thu rủi ro** và tiêu tốn **$26.38K chi phí vận chuyển**. Biến bang **SP** và **RJ** thành hai trọng điểm có số đơn đang vận chuyển cao.
 
-**Kết luận:** Dựa theo biểu đồ Line không có sự tương quan của số lượng đơn với việc xử lý đơn. Cho thấy rằng việc số lượng đơn hàng tăng trưởng mạnh theo thời gian,nhưng thời gian xử lý trung bình của đơn hàng không bị kéo dài, ngược lại việc tối ưu xử lý đơn hàng khá nhanh. Về thời gian giao hàng trung bình của bên vận chuyển thứ ba cũng làm khá tốt. Tuy nhiên để không bị rò rỉ, nguồn tiền bị lơ lửng vẫn chưa vào doanh thu thì ta cần hành động để tối ưu hoá nguồn tiền, và kiểm soát được vấn đề.
+**Kết luận:** Dựa theo biểu đồ Line không có sự tương quan của số lượng đơn với việc xử lý đơn. Cho thấy rằng việc số lượng đơn hàng tăng trưởng mạnh theo thời gian, nhưng thời gian xử lý trung bình của đơn hàng không bị kéo dài, ngược lại việc tối ưu xử lý đơn hàng khá nhanh. Và thời gian giao hàng trung bình của bên vận chuyển thứ ba cũng làm khá tốt. Tuy nhiên để không bị rò rỉ, nguồn tiền đang ở trạng thái lơ lửng còn kẹt trong hệ thống vẫn chưa vào doanh thu thì cần hành động giải quyết những vấn đề này để tối ưu nguồn tiền không bị thất thoát.
 
 ## 🚀 Recommendations
 
-Đầu tiên để chắc chắn vấn đề của việc những đơn hàng treo là xuất phát từ bên thứ nhất hay bên vận chuyển thứ 3 thì cần hành động theo trình tự
+Để chắc chắn vấn đề của việc những đơn hàng treo là xuất phát từ bên thứ nhất hay bên vận chuyển thứ 3 thì cần hành động theo trình tự:
 1. **Toàn vẹn dữ liệu hệ thống:** Kiểm tra lại giữa hệ thống dữ liệu thanh toán và hệ thống dữ liệu kho ở quá trình cập nhật trạng thái, thời gian đơn hàng để dứt điểm tình trạng những đơn hàng không khả dụng, và xem xét về vấn đề những đơn hàng treo quá lâu.
 2. **Các đối tác Vận chuyển:** Liên hệ làm việc và tìm hiểu, giải trình về đơn hàng kẹt chặng `shipped` quá 30 ngày.
 3. **Hệ thống Kho hàng:** Xử lý 301 đơn hàng đang kẹt ở khâu `processing` nội bộ kho và 312 đơn hàng `invoiced` nhằm tối ưu hóa không gian tồn kho cho các ngành hàng.
@@ -53,7 +53,7 @@ Mô hình dữ liệu được chuẩn hóa theo dạng Star Schema để tối 
 </details>
 
 ### 2. Thách thức kỹ thuật & Giải pháp dọn dẹp (SQL Script)
-Trước khi đưa vào mô hình, dữ liệu thô gặp phải những vấn đề logic khiến khó khăn trong việc ra quyết định xử lý hay giữ lại những dòng dữ liệu và các thách thức về việc truy vấn những dữ liệu khi mối quan hệ của các bảng phức tạp: 
+Trước khi đưa vào mô hình, dữ liệu thô gặp phải những vấn đề logic khiến khó khăn trong việc ra quyết định xử lý hay giữ lại những dòng dữ liệu và các thách thức về việc truy vấn những đơn hàng treo có nguy cơ tiếp tục ảnh hưởng đến doanh thu: 
 
 * Bảng `fact_orders`:
 
@@ -101,25 +101,30 @@ WHERE order_status = 'delivered'
 </details>
 
 <details>
-<summary> Khoảng trống (NULL values): Các cột mốc thời gian của các đơn hàng bị trống thiếu dữ liệu trong thời gian quá lâu so với thời gian cập nhật dữ liệu. </summary>
+<summary> NULL values: Các cột mốc thời gian của các đơn hàng bị trống thiếu dữ liệu trong thời gian quá lâu so với thời gian cập nhật dữ liệu. </summary>
 
 ```
-SELECT 
-	o.order_id,
+SELECT
 	o.order_status,
-	o.purchase_timestamp,
-	o.approved_at_timestamp,
-	o.delivered_carrier_timestamp,
-	items.shipping_limit,
-	(SELECT MAX(delivered_customer_timestamp) FROM orders) AS Limit_time
+	COUNT(DISTINCT(o.order_id))
 FROM orders AS o
 LEFT JOIN order_items AS items
 ON items.order_id = o.order_id
-WHERE order_status IN ('approved','invoiced','processing') -- Trạng thái những đơn hàng thuộc Warehouse
-	AND ((SELECT MAX(delivered_customer_timestamp) FROM orders) > items.shipping_limit) -- Vi phạm mốc thời gian: thời gian cập nhật dữ liệu cuối cùng của hệ thống vượt qua mốc
-	AND delivered_carrier_timestamp IS NULL -- Không có thời gian đưa cho đơn vị vận chuyển 
+WHERE 
+	-- Trạng thái những đơn hàng thuộc Warehouse
+(	order_status IN ('approved','invoiced','processing') 
+	-- Vi phạm mốc thời gian: thời gian cập nhật dữ liệu cuối cùng của hệ thống vượt qua mốc
+	AND ((SELECT MAX(delivered_customer_timestamp) FROM orders) > items.shipping_limit) 
+	AND delivered_carrier_timestamp IS NULL)
+OR  --- Trạng thái những đơn hàng thuộc Shipped 
+(	order_status = 'shipped' 
+	-- Vi phạm mốc thời gian: Thời gian cập nhật dữ liệu cuối cùng của hệ thống vượt qua thời gian dự kiến > 30 days
+	AND (SELECT MAX(delivered_customer_date) FROM orders)::DATE - estimated_delivery::DATE > 30) 
+	AND delivered_customer_date IS NULL)
+GROUP BY o.order_status 
 ```
-<img width="1710" height="309" alt="image" src="https://github.com/user-attachments/assets/97804147-def8-4577-bb07-769248390d61" />
+<img width="348" height="229" alt="image" src="https://github.com/user-attachments/assets/306cd998-507b-4bc5-938a-77609b962581" />
+
 
 </details>
 
@@ -298,5 +303,5 @@ AVG_Shipped_day =
 
 ---
 ## Review
-Cảm nhận về dự án: Bộ dữ liệu thực tế về các lỗi thường xảy ra trong hệ thống vận hành của sàn thương mại điện tử, gây khó khăn và nhiều vấn đề đòi hỏi phải khám phá và phân tích kỹ trước khi ra quyết định sử dụng những dữ liệu để trực quan, cũng như chọn lọc ngữ cảnh để tạo các chỉ số tối ưu về số liệu, hạn chế những sai sót khi sai về vấn đề ngữ cảnh, logic của định nghĩa các thuộc tính trong dữ liệu.
+Bộ dữ liệu thực tế về các lỗi thường xảy ra trong hệ thống vận hành của sàn thương mại điện tử, gây khó khăn và nhiều vấn đề đòi hỏi phải khám phá và phân tích kỹ trước khi ra quyết định sử dụng những dữ liệu để trực quan, chọn lọc ngữ cảnh để tạo các chỉ số tối ưu về số liệu, hạn chế những sai sót khi sử dụng dữ liệu tập trung vào vấn đề đang cần giải quyết.
 
