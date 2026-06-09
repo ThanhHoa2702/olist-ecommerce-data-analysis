@@ -111,16 +111,21 @@ FROM orders AS o
 LEFT JOIN order_items AS items
 ON items.order_id = o.order_id
 WHERE 
-	-- Trạng thái những đơn hàng thuộc Warehouse
-(	order_status IN ('approved','invoiced','processing') 
-	-- Vi phạm mốc thời gian: thời gian cập nhật dữ liệu cuối cùng của hệ thống vượt qua mốc
-	AND ((SELECT MAX(delivered_customer_timestamp) FROM orders) > items.shipping_limit) 
-	AND delivered_carrier_timestamp IS NULL)
-OR  --- Trạng thái những đơn hàng thuộc Shipped 
-(	order_status = 'shipped' 
+	------ Trạng thái những đơn hàng thuộc Warehouse
+(	order_status IN ('approved','invoiced','processing')
+
+	-- Vi phạm mốc thời gian: thời gian cập nhật dữ liệu cuối cùng vượt qua thời gian đưa cho đơn vị vận chuyển
+	AND ((SELECT MAX(delivered_customer_timestamp) FROM orders) > items.shipping_limit)
+
+	AND delivered_carrier_timestamp IS NULL) -- Chưa giao cho đơn vị vận chuyển 
+OR
+    ------ Trạng thái những đơn hàng thuộc Shipped
+(	order_status = 'shipped'
+
 	-- Vi phạm mốc thời gian: Thời gian cập nhật dữ liệu cuối cùng của hệ thống vượt qua thời gian dự kiến > 30 days
-	AND (SELECT MAX(delivered_customer_date) FROM orders)::DATE - estimated_delivery::DATE > 30) 
-	AND delivered_customer_date IS NULL)
+	AND (SELECT MAX(delivered_customer_date) FROM orders)::DATE - estimated_delivery::DATE > 30)
+
+	AND delivered_customer_date IS NULL -- Khách chưa nhận được hàng 
 GROUP BY o.order_status 
 ```
 <img width="348" height="229" alt="image" src="https://github.com/user-attachments/assets/306cd998-507b-4bc5-938a-77609b962581" />
