@@ -19,7 +19,7 @@ Xác định nguyên nhân thất thoát, giải quyết những vấn đề l�
 **Kết luận:** Tỷ lệ đơn huỷ do sự chủ động của khách hàng trên toàn ngành là 0.47% so với toàn hệ thống là 1.24%. Số lượng đơn huỷ gây ảnh hưởng trực tiếp đến trải nghiệm mua sắm nằm nhiều ở 767 đơn hàng không khả dụng, đây là hành động huỷ đơn từ phía cửa hàng cần phải xem xét. Có khá nhiều đơn hàng treo chưa cập nhật trạng thái tiềm ẩn có thể tiếp tục gây rò rỉ nguồn tiền ở khâu vận hành. Và vấn đề này có thể sẽ ảnh hưởng đến hành vi mua sắm, trải nghiệm của khách hàng trong tương lai.
 
 ### Operations
-* **Xử lý đơn hàng:** Xác định **1,721 đơn hàng** ở trạng thái treo với thời gian khá lâu,  613 đơn hàng chưa giao cho đơn vị vận chuyển, bị trễ hạn nghiêm trọng so với ngày dự kiến giao nhưng trạng thái đơn hàng vẫn không chuyển đổi.
+* **Xử lý đơn hàng:** Xác định **1,721 đơn hàng** ở trạng thái treo với thời gian khá lâu,  615 đơn hàng chưa giao cho đơn vị vận chuyển, bị trễ hạn nghiêm trọng so với ngày dự kiến giao nhưng trạng thái đơn hàng vẫn không chuyển đổi.
 * **Vấn đề tiềm ẩn:** 1,106 đơn (64% Tổng đơn hàng treo) đang bị kẹt ở trạng thái `shipped`. 
 * **Rủi ro tài chính:** Tổng số đơn hàng Zombie này đang giam giữ **$272.85K doanh thu rủi ro** và tiêu tốn **$26.38K chi phí vận chuyển**. Biến bang **SP** và **RJ** thành hai trọng điểm có số đơn đang vận chuyển cao.
 
