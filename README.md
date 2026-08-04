@@ -8,8 +8,6 @@ Xác định nguyên nhân thất thoát, giải quyết những vấn đề gâ
 * **Gồm 2 trang Dashboard**: Executive Summary & Operations.
 * **Công cụ sử dụng:** SQL (Data Cleaning & Exploration), Power BI (Data Modeling, DAX, Visualization).
 
----
-
 ## 📈 Key Insights & Business Impact
 
 ### Executive Summary 
