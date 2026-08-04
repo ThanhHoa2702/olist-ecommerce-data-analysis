@@ -2,7 +2,8 @@
 # Olist E-commerce Optimization: Decoding Canceled & Zombie Orders
 
 ## 📌 Overview
-Xác định nguyên nhân thất thoát, giải quyết những vấn đề lớn có thể tiếp tục gây ảnh hưởng đến doanh thu, trải nghiệm khách hàng trong chuỗi cung ứng và vận hành của nền tảng thương mại điện tử Olist: **Đơn hàng hủy** và **Đơn hàng treo**. Bằng cách kết hợp phân tích định lượng và trực quan hóa dữ liệu, bóc tách các luồng hành vi bất thường của khách hàng và xác định các điểm nghẽn logistics nhằm giảm thiểu tối đa thiệt hại về tài chính.
+
+Xác định nguyên nhân thất thoát, giải quyết những vấn đề gây ảnh hưởng đến doanh thu, trải nghiệm khách hàng trong chuỗi cung ứng thương mại điện tử Olist: **Đơn hàng hủy** và **Đơn hàng treo**. Kết hợp phân tích định lượng và trực quan hóa dữ liệu, bóc tách các hành vi bất thường của khách hàng và xác định các điểm nghẽn logistics nhằm giảm thiểu tối đa thiệt hại về tài chính.
 
 * **Gồm 2 trang Dashboard**: Executive Summary & Operations.
 * **Công cụ sử dụng:** SQL (Data Cleaning & Exploration), Power BI (Data Modeling, DAX, Visualization).
@@ -12,47 +13,36 @@ Xác định nguyên nhân thất thoát, giải quyết những vấn đề l�
 ## 📈 Key Insights & Business Impact
 
 ### Executive Summary 
-* **Khám phá Đơn hàng:** Có 1.234 đơn hàng huỷ trên toàn hệ thống doanh thu cho tổng số đơn hàng này $95.24k, tỷ lệ huỷ đơn trong 2 năm là 1.24%. 
-* **Nguyên nhân thất thoát:** 75 đơn hàng huỷ sau khi được đưa đi vận chuyển, gây thiệt hại chi phí vận chuyển $1,363k. Trọng điểm 2 ngành hàng Home & Furniture, Tech & Electronics có phí vận chuyển thất thoát cao.
-* **Đơn huỷ:** Phát hiện **767 đơn hàng** tồn tại trong hệ thống, nhưng trống thông tin sản phẩm. 386 đơn huỷ do sự chủ động của khách hàng nằm nhiều ở khâu Warehouse, có thể do sự thay đổi về nhu cầu mua sắm sản phẩm của khách hàng.
 
-**Kết luận:** Tỷ lệ đơn huỷ do sự chủ động của khách hàng trên toàn ngành là 0.47% so với toàn hệ thống là 1.24%. Số lượng đơn huỷ gây ảnh hưởng trực tiếp đến trải nghiệm mua sắm nằm nhiều ở 767 đơn hàng không khả dụng, đây là hành động huỷ đơn từ phía cửa hàng cần phải xem xét. Có khá nhiều đơn hàng treo chưa cập nhật trạng thái tiềm ẩn có thể tiếp tục gây rò rỉ nguồn tiền ở khâu vận hành. Và vấn đề này có thể sẽ ảnh hưởng đến hành vi mua sắm, trải nghiệm của khách hàng trong tương lai.
+* **Khám phá Đơn hàng:** 1.234 đơn hàng huỷ trên toàn hệ thống doanh thu cho tổng số đơn hàng này $95.24k, tỷ lệ huỷ đơn trong 2 năm là 1.24%. 
+* **Nguyên nhân thất thoát:** 75 đơn hàng huỷ sau khi được đưa đi vận chuyển, gây thiệt hại chi phí vận chuyển $1,363k. Trọng điểm 2 ngành hàng Home & Furniture, Tech & Electronics có phí vận chuyển thất thoát cao.
+* **Đơn huỷ:** Phát hiện 767 đơn hàng tồn tại trong hệ thống, trống thông tin sản phẩm. 386 đơn huỷ do chủ động của khách hàng nằm nhiều ở khâu Warehouse, có thể sự thay đổi về nhu cầu mua sắm sản phẩm của khách hàng.
+
+**Kết luận:** Tỷ lệ đơn huỷ từ chủ động của khách hàng toàn ngành là 0.47% so với toàn hệ thống là 1.24%. Số lượng đơn huỷ gây ảnh hưởng trực tiếp đến trải nghiệm mua sắm nằm nhiều ở đơn hàng không khả dụng, hết sản phẩm nhưng vẫn treo trên hệ thống. Nhiều đơn hàng treo chưa cập nhật trạng thái tiềm ẩn có thể tiếp tục gây rò rỉ nguồn tiền ở khâu vận hành.
 
 ### Operations
-* **Xử lý đơn hàng:** Xác định **1,721 đơn hàng** ở trạng thái treo với thời gian khá lâu,  615 đơn hàng chưa giao cho đơn vị vận chuyển, bị trễ hạn nghiêm trọng so với ngày dự kiến giao nhưng trạng thái đơn hàng vẫn không chuyển đổi.
-* **Vấn đề tiềm ẩn:** 1,106 đơn (64% Tổng đơn hàng treo) đang bị kẹt ở trạng thái `shipped`. 
-* **Rủi ro tài chính:** Tổng số đơn hàng Zombie này đang giam giữ **$272.85K doanh thu rủi ro** và tiêu tốn **$26.38K chi phí vận chuyển**. Biến bang **SP** và **RJ** thành hai trọng điểm có số đơn đang vận chuyển cao.
+* **Xử lý đơn hàng:** 1,721 đơn hàng treo chưa chuyển trạng thái,  615 đơn hàng chưa giao cho đơn vị vận chuyển, bị trễ hạn nghiêm trọng so với ngày dự kiến.
+* **Vấn đề tiềm ẩn:** 1,106 đơn chiếm 64% Tổng đơn hàng treo đang bị kẹt ở trạng thái `shipped`. 
+* **Rủi ro tài chính:** Tổng số đơn hàng đang giam giữ $272.85K doanh thu rủi ro và tiêu tốn $26.38K chi phí vận chuyển. Bang SP và RJ thành hai trọng điểm có số đơn bị treo nhiều nhất.
 
-**Kết luận:** Dựa theo biểu đồ Line không có sự tương quan của số lượng đơn với việc xử lý đơn. Cho thấy rằng việc số lượng đơn hàng tăng trưởng mạnh theo thời gian, nhưng thời gian xử lý trung bình của đơn hàng không bị kéo dài, ngược lại việc tối ưu xử lý đơn hàng khá nhanh. Và thời gian giao hàng trung bình của bên vận chuyển thứ ba cũng làm khá tốt. Tuy nhiên để không bị rò rỉ, nguồn tiền đang ở trạng thái lơ lửng còn kẹt trong hệ thống vẫn chưa vào doanh thu thì cần hành động giải quyết những vấn đề này để tối ưu nguồn tiền không bị thất thoát.
+**Kết luận:** Theo biểu đồ Line không có sự tương quan của số lượng đơn với việc xử lý đơn. Việc lượng đơn hàng tăng trưởng mạnh theo thời gian, nhưng thời gian xử lý trung bình của đơn hàng không bị kéo dài. Và bên vận chuyển thứ ba cũng làm tốt. Có thể vấn đề nằm ở hệ thống, cần truy vết để nguồn tiền được xử lý. 
 
 ## 🚀 Recommendations
-
-Để chắc chắn vấn đề của việc những đơn hàng treo là xuất phát từ bên thứ nhất hay bên vận chuyển thứ 3 thì cần hành động theo trình tự:
-1. **Toàn vẹn dữ liệu hệ thống:** Kiểm tra lại giữa hệ thống dữ liệu thanh toán và hệ thống dữ liệu kho ở quá trình cập nhật trạng thái, thời gian đơn hàng để dứt điểm tình trạng những đơn hàng không khả dụng, và xem xét về vấn đề những đơn hàng treo quá lâu.
-2. **Các đối tác Vận chuyển:** Liên hệ làm việc và tìm hiểu, giải trình về đơn hàng kẹt chặng `shipped` quá 30 ngày.
-3. **Hệ thống Kho hàng:** Xử lý 301 đơn hàng đang kẹt ở khâu `processing` nội bộ kho và 312 đơn hàng `invoiced` nhằm tối ưu hóa không gian tồn kho cho các ngành hàng.
+1. **Dữ liệu hệ thống:** Kiểm tra lại hệ thống dữ liệu thanh toán ở quá trình cập nhật trạng thái.
+2. **Đối tác vận chuyển:** Liên hệ làm việc và tìm hiểu, giải trình về đơn hàng kẹt chặng `shipped` quá 30 ngày.
+3. **Hệ thống Kho hàng:** Xử lý các đơn hàng kẹt ở Warehouse tối ưu hóa không gian tồn kho cho các ngành hàng.
 
 ---
 
 ## 🛠 Tech Stack & Skills Demonstrated
-* **Data Querying & Cleaning:** SQL (Bóc tách cấu trúc logic các trạng thái vòng đời của đơn hàng, xử lý danh mục sản phẩm không tên).
-* **Data Modeling:** Star Schema (2 Fact table, 3 Dimension tables).
-* **Advanced Analytics:** DAX (Tối ưu Filter Context, Weighted Average Rate, Time-Intelligence).
-* **Data Storytelling:** Trực quan hóa dữ liệu chuẩn UI/UX.
+* **Truy vấn, làm sạch dữ liệu:** Bóc tách cấu trúc logic các trạng thái vòng đời của đơn hàng, xử lý danh mục sản phẩm không tên.
+* **Mô hình hoá dữ liệu:** 2 Fact table, 3 Dimension tables.
+* **Kỹ thuật phân tích:** Tối ưu Filter Context, Weighted Average Rate, Time-Intelligence.
+* **Trực quan dữ liệu:** Chuẩn UX/UI.
 
-## 🏗 Data Architecture & Data Cleaning (SQL)
+## 🏗 Data Architecture & Data Cleaning
 
-### 1. Sơ đồ Mô hình dữ liệu (Data Model)
-Mô hình dữ liệu được chuẩn hóa theo dạng Star Schema để tối ưu hóa tốc độ truy vấn và xử lý Filter Context trong Power BI:
-* **Fact Table:** `fact_orders` (Chứa thông tin trạng thái của đơn hàng và các cột mốc của vòng đời đơn hàng), `order_items` (Chứa thông tin sản phẩm đơn hàng và tên sản phẩm, doanh thu, chi phí).
-* **Dimension Tables:** `dim_customers`, `dim_products`, `dim_calendar`.
-
-<details>
-<summary> Data Model View </summary>
-<img width="1481" height="1001" alt="image" src="https://github.com/user-attachments/assets/487b3c24-dc62-4c97-93fe-c3dcaa5bd9cd" />
-</details>
-
-### 2. Thách thức kỹ thuật & Giải pháp dọn dẹp (SQL Script)
+### Kỹ thuật & Giải pháp dọn dẹp
 Trước khi đưa vào mô hình, dữ liệu thô gặp phải những vấn đề logic khiến khó khăn trong việc ra quyết định xử lý hay giữ lại những dòng dữ liệu và các thách thức về việc truy vấn những đơn hàng treo có nguy cơ tiếp tục ảnh hưởng đến doanh thu: 
 
 * Bảng `fact_orders`:
@@ -195,17 +185,25 @@ Mục tiêu của dự án: Truy vết về những vấn đề gây rò rỉ do
 
 Phương thức xử lý: Cô lập dữ liệu lỗi để không làm sai lệch các chỉ số tính toán thời gian, bắt buộc giữ lại nhằm bảo toàn bức tranh tổng doanh thu. Báo cáo trực quan những vấn đề có thể sẽ tiếp tục gây thêm thất thoát cho doanh thu.
 
-## 📊 Advanced DAX Formula & Analytics Logic
+## 📊 DAX Formula & Analytics Logic
+
+### Sơ đồ Mô hình dữ liệu
+Mô hình dữ liệu được chuẩn hóa theo dạng Star Schema để tối ưu hóa tốc độ truy vấn và xử lý:
+* **Fact Table:** `fact_orders` thông tin trạng thái của đơn hàng và các cột mốc của vòng đời đơn hàng, `order_items` thông tin sản phẩm đơn hàng và tên sản phẩm, doanh thu, chi phí.
+* **Dimension Tables:** `dim_customers`, `dim_products`, `dim_calendar`.
+
+<details>
+<summary> Data Model View </summary>
+<img width="1481" height="1001" alt="image" src="https://github.com/user-attachments/assets/487b3c24-dc62-4c97-93fe-c3dcaa5bd9cd" />
+</details>
 
 Toàn bộ các chỉ số đo lường hiệu suất đều được tính toán bằng trung bình có trọng số, kiểm soát Filter Context chặt chẽ. Nhằm tránh các biểu đồ trực quan rơi vào việc cộng dồn tỷ lệ phần trăm.
 
-**Các độ đo thách thức** 
-
-**1. Tỷ lệ Hủy đơn Thực tế (Toàn ngành hàng):**
+**1. Tỷ lệ hủy đơn Toàn ngành hàng:**
 
 * `Cancellation_Rate_by_Category` = $\frac{TotalCanceledCategory}{TotalOrderbyCategory}$
 
-Độ đo này khác với Tỷ lệ huỷ đơn toàn hệ thống,`Total_Canceled_Category` điều kiện của tử số này đã được ghi nhận cả 2 bảng `fact_orders` và `order_items` thời gian đặt hàng, thông tin sản phẩm, ngành hàng khác với `Cancellation_Rate %` trên toàn hệ thống sẽ có những đơn hàng được huỷ trước khi hệ thống ghi nhận nghĩa là sẽ không có dữ liệu bên bảng `order_items` (Lấy dữ liệu trực tiếp dựa trên `fact_orders`).
+Độ đo này khác với Tỷ lệ huỷ đơn toàn hệ thống,`Total_Canceled_Category` điều kiện của tử số này đã được ghi nhận cả 2 bảng `fact_orders` và `order_items` thời gian đặt hàng, thông tin sản phẩm, ngành hàng khác với `Cancellation_Rate %` trên toàn hệ thống sẽ có những đơn hàng được huỷ trước khi hệ thống ghi nhận nghĩa là sẽ không có dữ liệu bên bảng `order_items`.
 
 Mẫu số là `Total_Order_by_Category` có điều kiện lọc cố định ngành hàng cụ thể và có thông tin xác nhận trong `order_items` nhằm tối ưu ngữ cảnh khi trực quan.
 
@@ -232,7 +230,7 @@ VAR Total_Order_by_Category =
 RETURN 
     DIVIDE(Total_Canceled_Category, Total_Order_by_Category,0)
 ```
-**Tương tác chéo (Cross-filtering Protection):** Sử dụng giải pháp `ALLEXCEPT` để cố định mẫu số quy mô khi người xem click vào các phân đoạn lỗi, giúp tỷ lệ lỗi phân bổ chính xác theo từng ngành hàng mà không bị biến thành `100%` đồng loạt.
+**Tương tác chéo:** Sử dụng giải pháp `ALLEXCEPT` để cố định mẫu số quy mô khi người xem click vào các phân đoạn lỗi, giúp tỷ lệ lỗi phân bổ chính xác theo từng ngành hàng.
 </details>
 
 <img width="925" height="401" alt="image" src="https://github.com/user-attachments/assets/9d4e6eb7-6d96-42e6-957f-cc3d7da42f1e" />
