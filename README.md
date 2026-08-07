@@ -304,6 +304,7 @@ AVG_Shipped_day =
 
 ---
 ## Review
-Bộ dữ liệu thực tế về các lỗi thường xảy ra trong hệ thống vận hành của sàn thương mại điện tử, gây khó khăn và nhiều vấn đề đòi hỏi phải khám phá và phân tích kỹ trước khi ra quyết định sử dụng những dữ liệu để trực quan, chọn lọc ngữ cảnh để tạo các chỉ số tối ưu về số liệu, hạn chế những sai sót khi sử dụng dữ liệu tập trung vào vấn đề đang cần giải quyết.
+
+Đây là dự án học thuật, bộ dữ liệu thoả mãn mục địch ứng dụng những kiến thức cơ bản trong thống kê mô tả, truy vấn những vấn đề xuất hiện trong bộ dữ liệu. Mang tính chất tham khảo, không áp dụng hoặc sử dụng chỉ ra những vấn đề thực tế.
 
 Cảm ơn Công ty Olist đã cung cấp dataset: https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce
